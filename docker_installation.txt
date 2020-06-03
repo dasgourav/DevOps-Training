@@ -1,0 +1,22 @@
+sudo su -
+hostname docker-host
+
+#Install docker and start docker services
+yum install docker -y
+docker --version 
+
+# start docker services
+service docker start
+service docker status
+service --status-all | grep docker
+
+# Create a user called dockeradmin
+useradd dockeradmin
+passwd <Provide_PassWord>
+
+#add a user to docker group to manage docker
+cat /etc/group
+usermod -aG docker dockeradmin
+id dockeradmin 
+
+
