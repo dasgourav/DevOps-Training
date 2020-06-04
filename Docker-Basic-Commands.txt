@@ -1,0 +1,53 @@
+#Docker Pull
+docker pull nginx:latest
+
+#Check Docker Images
+docker images
+
+#Run Docker image as Container
+docker run --name some-nginx -d -p 8080:80 nginx   
+
+#Docker Maintenance Commands
+docker ps //list the container
+docker ps -a  //list the container that had stop as well
+docker stop containername //Stop Container
+docker start containername //Start Container
+docker rm containername //Remove Container
+docker rm -f containername //Remove Container Frocefully
+docker image rm -f  imagename //Remove Image
+
+#Docker Inspect & Log Commands
+docker image inspect IMAGE-ID/Image-Name
+docker image history IMAGE-ID/Image-Name
+docker container inspect Container-ID/Container-Name
+docker container history Container-ID/Container-Name
+docker logs Container-ID/Container-Name
+
+#Interactive terminal
+docker exec -it containername /bin/bash
+exit (to exit terminal)
+
+#Docker Bind Mount
+cd /home/ec2-user
+echo "Hello World" > index.html
+chmod -R o+rx /home/ec2-user
+docker run --name nginx -v /home/ec2-user:/usr/share/nginx/html:ro -d -p 80:80 nginx 
+
+#Docker Docker-Volume
+docker volume create volume-name
+docker inspect volume-name
+docker run -d -v volume-name:/usr/share/nginx/html:ro -d -p 80:80 nginx 
+
+#How to push and pull image to DockerHub
+docker login
+docker tag containername DockerID/Repository-name:latest
+docker push DockerID/Repository-name:latest
+docker pull DockerID/Repository-name:latest
+
+#Docker Network
+docker network ls 
+docker network create --attachable -d bridge --subnet=10.20.0.0/16 aws-ecs
+docker run --name web -e "NAME=Gourav" -d --net aws-ecs -p 80:8080 gunbo/aws-ecs:latest
+docker run --name app -e "NAME=Gourav" -d --net aws-ecs -p 80:8080 gunbo/aws-ecs:latest
+docker container inspect 0c7815c7891a
+docker network inspect aws-ecs
